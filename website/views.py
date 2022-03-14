@@ -22,7 +22,6 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     elif request.method == "POST":
-        print("here")
         # check if the post request has the file part
         if "file" not in request.files:
             print("No file part")
