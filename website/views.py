@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
+from . import converter
 
 import os
+
 
 views = Blueprint("views", __name__)
 
@@ -9,7 +11,7 @@ views = Blueprint("views", __name__)
 UPLOAD_FOLDER = "website/uploads"
 
 # List of image extensions
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 
 # Check if the file extension is allowed
 def allowed_file(filename):
@@ -38,4 +40,6 @@ def home():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            return send_file(os.path.join("uploads/" + filename))
+
+            ascii_chars = converter.convert(os.path.join(UPLOAD_FOLDER, filename))
+            return "<pre style='font-size:5px;'>" + ascii_chars + "</pre>"
