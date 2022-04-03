@@ -2,7 +2,7 @@ from PIL import Image
 import os
 
 # List of ascii characters used to build the image. "." is a lighter pixel, "@" is a darker pixel
-ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
+NORMAL_ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
 # Remove transparency
 def remove_transparency(im, bg_colour=(255, 255, 255)):
@@ -57,7 +57,7 @@ def convert(path, chars=1000000, max_width=200):
     pixels = img.getdata()
 
     # Grey scale values are 0 - 255, map each pixel to one of the 11 ASCII character from the ASCII_CHARS list
-    characters = "".join([ASCII_CHARS[pixel // 25] for pixel in pixels])
+    characters = "".join([NORMAL_ASCII_CHARS[pixel // 25] for pixel in pixels])
 
     # Format the characters
     pixel_count = len(characters)
